@@ -17,9 +17,9 @@ class Movement extends Model
         'description',
         'created_by',
         'recurrence',
-        ];
+    ];
 
     protected $casts = [
-      'recurrence' => RecurrenceEnum::class
+        'recurrence' => RecurrenceEnum::class,
     ];
 }

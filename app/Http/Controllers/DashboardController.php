@@ -12,56 +12,68 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+    /**
+     * @var MovementRepositoryInterface
+     */
     private MovementRepositoryInterface $movementRepository;
 
+    /**
+     * @param MovementRepositoryInterface $movementRepository
+     */
     public function __construct(MovementRepositoryInterface $movementRepository)
     {
         $this->movementRepository = $movementRepository;
     }
 
-    public function index(): View
-    {
-        $movements = DB::table('movements')->where('created_by', '=', Auth::id())->get();
-        return view('home', [
-            'movements' => $movements,
-            'total_movements' => $movements->sum('value'),
-        ]);
-    }
-
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function store(Request $request): JsonResponse
     {
         $movementDetails = $request->only([
             'client',
-            'details'
+            'details',
         ]);
 
         return response()->json(
             [
-                'data' => $this->movementRepository->createMovement($movementDetails)
+                'data' => $this->movementRepository->createMovement($movementDetails),
             ],
             Response::HTTP_CREATED
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function show(Request $request): JsonResponse
     {
         $movementId = $request->route('id');
 
         return response()->json([
-            'data' => $this->movementRepository->getMovementById($movementId)
+            'data' => $this->movementRepository->getMovementById($movementId),
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function update(Request $request): JsonResponse
     {
-        $movementId = $request->route('id');
+        $movementId      = $request->route('id');
         $movementDetails = $request->only([
             'client',
-            'details'
+            'details',
         ]);
 
-         response()->json([
-            'data' => $this->movementRepository->updateMovement($movementId, $movementDetails)
+        response()->json([
+            'data' => $this->movementRepository->updateMovement($movementId, $movementDetails),
         ]);
 
         return view('home', [
@@ -69,6 +81,23 @@ class DashboardController extends Controller
         ]);
     }
 
+    /**
+     * @return View
+     */
+    public function index(): View
+    {
+        $movements = DB::table('movements')->where('created_by', '=', Auth::id())->get();
+        return view('home', [
+            'movements'       => $movements,
+            'total_movements' => $movements->sum('value'),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
     public function destroy(Request $request): JsonResponse
     {
         $movementId = $request->route('id');

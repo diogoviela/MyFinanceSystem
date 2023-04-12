@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class DashboardUpdateRequest extends FormRequest
 {
@@ -16,10 +14,10 @@ class DashboardUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'value' => ['decimal'],
+            'value'       => ['decimal'],
             'description' => ['text', 'max:255'],
-            'recurrence' => ['required', 'exists:t01_financial.recurrence'],
-            'created_at' => ['date'],
+            'recurrence'  => ['required', 'exists:t01_financial.recurrence'],
+            'created_at'  => ['date'],
         ];
     }
 }

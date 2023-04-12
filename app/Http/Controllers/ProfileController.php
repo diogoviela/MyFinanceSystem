@@ -22,22 +22,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
@@ -58,17 +42,38 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'avatar' => 'required|image',
         ]);
 
-        $avatarName = time().'.'.$request->avatar->getClientOriginalExtension();
+        $avatarName = time() . '.' . $request->avatar->getClientOriginalExtension();
         $request->avatar->move(public_path('avatars'), $avatarName);
 
-        Auth()->user()->update(['avatar'=>$avatarName]);
+        Auth()->user()->update(['avatar' => $avatarName]);
 
         return Redirect::route('profile.store')->with('status', 'avatar-updated');
+    }
+
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 }

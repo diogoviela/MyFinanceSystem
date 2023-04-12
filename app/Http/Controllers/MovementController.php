@@ -10,11 +10,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\Rules\Enum;
 
 class MovementController extends Controller
 {
+    /**
+     * @var MovementRepositoryInterface
+     */
     private MovementRepositoryInterface $movementRepository;
 
     /**
@@ -31,28 +33,29 @@ class MovementController extends Controller
     public function index(): JsonResponse
     {
         return response()->json([
-            'data' => $this->movementRepository->getAllMovements()
+            'data' => $this->movementRepository->getAllMovements(),
         ]);
     }
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
         $movementDetails = $request->validate([
-            'value' => 'required',
+            'value'       => 'required',
             'description' => 'required',
-            'recurrence' => [new Enum(RecurrenceEnum::class)],
+            'recurrence'  => [new Enum(RecurrenceEnum::class)],
         ]);
 
         return redirect()->route('home', $this->movementRepository->createMovement($movementDetails))->with('status', 'movement-store');
-
     }
 
     /**
      * @param Request $request
+     *
      * @return Application|Factory|View
      */
     public function show(Request $request): Application|Factory|View
@@ -64,15 +67,16 @@ class MovementController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     public function update(Request $request): RedirectResponse
     {
-        $movementId = $request->route('id');
+        $movementId      = $request->route('id');
         $movementDetails = $request->validate([
-            'value' => 'required',
+            'value'       => 'required',
             'description' => 'required',
-            'recurrence' => [new Enum(RecurrenceEnum::class)],
+            'recurrence'  => [new Enum(RecurrenceEnum::class)],
         ]);
 
         return redirect()->route('home', $this->movementRepository->updateMovement($movementId, $movementDetails))->with('status', 'movement-updated');
@@ -80,6 +84,7 @@ class MovementController extends Controller
 
     /**
      * @param Request $request
+     *
      * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse

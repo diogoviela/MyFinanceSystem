@@ -58,45 +58,45 @@
                     <div class="table-responsive">
                         <table class="table text-nowrap">
                             <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>value</th>
-                                <th>Recurrence</th>
-                                <th>Date</th>
-                                <th>Tools</th>
-                            </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>value</th>
+                                    <th>Recurrence</th>
+                                    <th>Date</th>
+                                    <th>Tools</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($movements as $movement)
-                                <tr class="bg-success text-white">
-                                    <td>
-                                        {{ $movement->description }}
-                                    </td>
-                                    <td>
-                                        {{ $movement->value }}    &euro;
-                                    </td>
-                                    <td>
-                                        {{ $movement->recurrence }}
-                                    </td>
-                                    <td>
-                                        {{ date('d-m-Y', strtotime($movement->created_at)) }}
-                                    </td>
-                                    <td>
-                                        @if($movement->created_by === Auth::id())
-                                            <div class="d-inline-flex">
-                                                <a href="{{ route('movements.show', ['id' => $movement->id]) }}"
-                                                   class="text-body">
-                                                    <i class="ph-pen"></i>
-                                                </a>
-                                                <a data-bs-toggle="modal"
-                                                   data-bs-target="#remove_movement" class="text-body">
-                                                    <i class="ph-trash"></i>
-                                                </a>
-                                            </div>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach($movements as $movement)
+                                    <tr class="bg-success text-white">
+                                        <td>
+                                            {{ $movement->description }}
+                                        </td>
+                                        <td>
+                                            {{ $movement->value }}    &euro;
+                                        </td>
+                                        <td>
+                                            {{ $movement->recurrence }}
+                                        </td>
+                                        <td>
+                                            {{ date('d-m-Y', strtotime($movement->created_at)) }}
+                                        </td>
+                                        <td>
+                                            @if($movement->created_by === Auth::id())
+                                                <div class="d-inline-flex">
+                                                    <a href="{{ route('movements.show', ['id' => $movement->id]) }}"
+                                                       class="text-body">
+                                                        <i class="ph-pen"></i>
+                                                    </a>
+                                                    <a data-bs-toggle="modal"
+                                                       data-bs-target="#remove_movement" class="text-body">
+                                                        <i class="ph-trash"></i>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <br/>

@@ -25,13 +25,12 @@ class MovementRepository implements MovementRepositoryInterface
 
     public function createMovement(array $movementDetails)
     {
-        $movement = new Movement;
-        $movement->value = $movementDetails['value'];
+        $movement              = new Movement;
+        $movement->value       = $movementDetails['value'];
         $movement->description = $movementDetails['description'];
-        $movement->recurrence = $movementDetails['recurrence'];
-        $movement->created_by = Auth()->user()->id;
+        $movement->recurrence  = $movementDetails['recurrence'];
+        $movement->created_by  = Auth()->user()->id;
         $movement->save();
-
     }
 
     public function updateMovement($movementId, array $movementDetails)
