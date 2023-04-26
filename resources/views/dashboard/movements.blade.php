@@ -131,7 +131,7 @@
                         <div class="modal-dialog" role="movement">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="add_movement">Basic modal</h5>
+                                    <h5 class="modal-title" id="add_movement">Add Movement</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
 
