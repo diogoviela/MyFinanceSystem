@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->enum('recurrence', ['Monthly', 'Weekly', 'Daily']);
             $table->dateTime('created_at')->index();
             $table->dateTime('updated_at')->index();
-            $table->unsignedInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by')->index();
 
             // foreign keys
             $table->foreign('created_by')->references('id')->on('users');

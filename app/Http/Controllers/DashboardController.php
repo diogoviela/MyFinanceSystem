@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\MovementRepositoryInterface;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -62,9 +64,9 @@ class DashboardController extends Controller
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     *
      */
-    public function update(Request $request): JsonResponse
+    public function update(Request $request)
     {
         $movementId      = $request->route('id');
         $movementDetails = $request->only([
@@ -86,6 +88,7 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
+        //Todo: Review this part of code | error deploy when user as no movement
         $movements = DB::table('movements')->where('created_by', '=', Auth::id())->get();
         return view('home', [
             'movements'       => $movements,
